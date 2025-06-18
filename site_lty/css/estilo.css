@@ -190,7 +190,7 @@ header .container{
 #personagens .item p{
     margin-top: 15px;
     font-size: 0.95em;
-    color: burlywood;
+    color: rgb(0, 0, 0);
 }
 
 #personagens .imagem img{
