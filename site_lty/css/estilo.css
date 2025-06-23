@@ -254,6 +254,7 @@ header .container{
     padding: 30px;
     border-radius: 10px;
     max-width: 400px;
+    height: 500px;
     text-align: center;
     box-shadow: 0px 5px 20px #554e4e;
     max-height: 90vh;
@@ -304,6 +305,13 @@ h1{
 
     .sobre-texto {
         padding: 10px;
+    }
+
+    .modal-content{
+        margin-top: 150px;
+        max-width: 300px;
+        height: 400px;
+        font-size: 1em;
     }
 }
 
@@ -358,4 +366,11 @@ h1{
     .galeria-img img {
         width: 25vw;
     }
+}
+
+footer{
+    text-align: center;
+    background-color: #e35342;
+    padding: 20px;
+    margin-top: 30px;
 }
