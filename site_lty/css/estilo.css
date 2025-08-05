@@ -401,3 +401,20 @@ footer{
     padding: 20px;
     margin-top: 30px;
 }
+
+.banner2{
+    background: url(../img/banner\ llty.jpg) no-repeat center/cover;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 90px;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #ffff;
+    font-size: 1rem;
+    text-align: left;
+    text-shadow: 2px 2px 5px #000000;
+    
+}
