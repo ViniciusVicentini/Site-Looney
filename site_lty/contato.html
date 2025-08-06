@@ -31,6 +31,93 @@
     <section id="inicio" class="banner2">
         <h1>Contato</h1>
         <p>Entre em contato conosco!</p>
+    </section>
+
+    <form action="/action_page.php">
+        <label for="nom">Nome:</label><br>
+        <input type="text" id="nom" name="nom"><br>
+        <label for="snom">Sobrenome:</label><br>
+        <input type="text" id="snom" name="snom"><br><br>
+      </form>
+
+      <form action="/action_page.php">
+        <label for="usuar">Usuario:</label><br>
+        <input type="text" id="usuar" name="usuar"><br>
+        <label for="senh">Senha:</label><br>
+        <input type="senh" id="senh" name="senh">
+        </form>
+
+      <input type="text" id="assunto" name="assunto" list="lista-assunto" placeholder="Escolha ou digite o assunto">
+      <datalist id="lista-assunto">
+        <option value="Orçamento">
+        <option value="Suporte técnico">
+        <option value="Dúvida sobre produto">
+        <option value="Parceria comercial">
+        <option value="Sugestão">
+        <option value="Reclamação">
+      </datalist>
+
+      <form>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+      </form>
+
+      <form>
+        <label for="text">Senha Email: </label>
+        <input type="senha_mail" id="senha_mail" name="senha_mail">
+      </form>
+
+      <form>
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday">
+    </form>
+
+    <form>
+          <input type="radio" id="masculino" name="fav_language" value="masculino">
+          <label for="masculino">Masculino</label><br>
+          <input type="radio" id="feminino" name="fav_language" value="feminino">
+          <label for="feminino">Feminino</label><br>
+          <input type="radio" id="outro" name="fav_language" value="outro">
+          <label for="outro">Outro</label>
+        </form> 
+
+    <form>
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+    </form>
+
+
+    <p>Personagem Famoso Favorito?</p>
+
+
+    <form>
+        <input type="checkbox" id="duvida" name="tipo_atendimento" value="duvida">
+        <label for="duvida">Ligeirin</label><br>
+    </form>
+
+    <form>
+        <input type="checkbox" id="duvida" name="tipo_atendimento" value="duvida">
+        <label for="duvida">Coiote</label><br>
+    </form>
+
+    <form>
+        <input type="checkbox" id="duvida" name="tipo_atendimento" value="duvida">
+        <label for="duvida">Tazz</label><br>
+    </form>
+
+    <form>
+        <input type="checkbox" id="duvida" name="tipo_atendimento" value="duvida">
+        <label for="duvida">Papá-Léguas</label><br>
+    </form>
+    
+    <form>
+        <label for="email">Nosso Email de Contato:</label>
+        <input type="email" id="email" name="email" value="vinisvicentini@gmail.com" required>
+    </form>
+    
+    <form action="/action_page.php">
+        <label for="cont_whats">Whatsapp para contato:</label><br>
+        <input type="text" id="fname" name="cont_whats" value="(11) 98828-9828"><br>
 
 </body>
 </html>
