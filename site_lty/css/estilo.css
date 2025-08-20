@@ -302,6 +302,45 @@ h1{
     justify-content: center;
 }
 
+.formulario-contato {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+    margin-top: 40px;
+    color: #000080;
+}
+
+.grupo-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.grupo-form input,
+.grupo-form select,
+.grupo-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    margin-top: 8px;
+}
+
+.grupo-form input[type="checkbox"],
+.grupo-form input[type="radio"] {
+    margin-right: 8px;
+    margin-top: 0;
+}
+
+.grupo-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 @media (max-width: 450px) {
     .banner {
         font-size: 0.8rem;
@@ -428,45 +467,6 @@ footer{
     
 }
 
-.formulario-contato {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: auto;
-    margin-top: 40px;
-    color: #000080;
-}
-
-.grupo-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    font-size: 1.2em;
-}
-
-.grupo-form input,
-.grupo-form select,
-.grupo-form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
-    margin-top: 8px;
-}
-
-.grupo-form input[type="checkbox"],
-.grupo-form input[type="radio"] {
-    margin-right: 8px;
-    margin-top: 0;
-}
-
-.grupo-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -484,4 +484,5 @@ table {
   tr:nth-child(even) {
     background-color: #ffa600;
   }
+
 
