@@ -9,6 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    <div id="memory-game">
+        <h2>Jogo da Memória Looney Tunes</h2>
+        <div id="stats">Jogadas: 0 | Tempo: 0s</div>
+        <div id="cards-container"></div>
+        <button id="restart-btn" style="display:none;">Jogar Novamente</button>
+        <button id="close-btn" style="display:none;">Fechar</button>
+    
+    </div>
+
 </head>
 <body>
     <header>    
@@ -24,11 +34,13 @@
                     <li><a href="index.html#influência">Influência</a></li>
                     <li><a href="index.html#auge">Auge</a></li>
                     <li><a href="index.html#contato">Contato</a></li>
+                    <li><a href="#" id="open-game">JOGO</a></li>
                 </ul>
             </nav>
         </div>
     </header>  
     <section id="inicio" class="banner2">
+        <form class="formulario-contato" action="https://formsubmit.co/vinisvicentini@gmail.com" method="post">    
         <h1>Contato</h1>
         <p>Entre em contato conosco!</p>
     </section>
@@ -59,12 +71,12 @@
             <label for="assunto">Assunto:</label>
             <input type="text" id="assunto" name="assunto" list="lista-assunto" placeholder="Escolha ou digite o assunto">
             <datalist id="lista-assunto">
-                <option value="Orçamento">
-                <option value="Suporte técnico">
-                <option value="Dúvida sobre produto">
-                <option value="Parceria comercial">
-                <option value="Sugestão">
-                <option value="Reclamação">
+                <option value="Personagens">
+                <option value="Curiosidades">
+                <option value="História dos Looney Tunes">
+                <option value="Jogo do site">
+                <option value="Galeria de imagens">
+                <option value="Outros assuntos">
             </datalist>
         </div>
 
@@ -123,10 +135,141 @@
         <div class="grupo-form">
             <button type="submit">Enviar</button>
             <input type="hidden" name="_captcha" value="false"> 
-            <input type="hidden" name="_next" value="https://viniciusvicentini.github.io/Site-Looney/site_lty/enviado_sucesso.html">
+            <input type="hidden" name="_next" value="https://github.com/ViniciusVicentini/Site-Looney/blob/main/site_lty/enviado_sucesso.html">
         </div>
       </div>
     </form>
 
+    <footer>
+        2025 - Desenvolvido por Vinicius Vicentini :D
+    </footer>
+
+    <script>
+        (function(){
+          const images = [
+            'imgsobre/frajola.webp','imgsobre/frajola.webp',
+            'imgsobre/gaguinho.webp','imgsobre/gaguinho.webp',
+            'imgsobre/patolino.webp','imgsobre/patolino.webp',
+            'imgsobre/pernalonga.webp','imgsobre/pernalonga.webp',
+            'imgsobre/piu-piu.webp','imgsobre/piu-piu.webp',
+            'imgcard/Tazz2_resized.webp','imgcard/Tazz2_resized.webp',
+            'imgcard/ligeirin_resized.webp','imgcard/ligeirin_resized.webp',
+            'imgcard/papa leguas.webp','imgcard/papa leguas.webp',
+            'galeria/cacador_resized.png','galeria/cacador_resized.png',
+            'galeria/chiquinho_resized.png','galeria/chiquinho_resized.png',
+            'galeria/eufrazino_resized.png','galeria/eufrazino_resized.png',
+            'galeria/frangolino_resized.png','galeria/frangolino_resized.png',
+            'galeria/gamba_resized.png','galeria/gamba_resized.png',
+            'galeria/marvin_resized.png','galeria/marvin_resized.png',
+            'imgcard/coiote2.png','imgcard/coiote2.png'
+          ];
+      
+        let first = null, second = null, lock = false;
+        let moves = 0, timer = 0, interval = null, matchedPairs = 0;
+        const game = document.getElementById('memory-game');
+        const container = document.getElementById('cards-container');
+        const stats = document.getElementById('stats');
+        const restartBtn = document.getElementById('restart-btn');
+        const closeBtn = document.getElementById('close-btn');
+      
+        function shuffle(arr) {
+          for (let i = arr.length -1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr;
+        }
+      
+        function updateStats() {
+          stats.textContent = `Jogadas: ${moves} | Tempo: ${timer}s`;
+        }
+      
+        function init() {
+          container.innerHTML = '';
+          const cards = shuffle(images.slice());
+          first = second = null;
+          lock = false;
+          moves = 0;
+          timer = 0;
+          matchedPairs = 0;
+          restartBtn.style.display = 'none';
+          closeBtn.style.display = 'none';
+          updateStats();
+      
+          cards.forEach((val) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.value = val;
+            card.addEventListener('click', () => {
+              if (lock || card.classList.contains('matched') || card === first) return;
+      
+              card.innerHTML = `<img src="img/${val}" width="80" height="80">`;
+      
+              if (!first) {
+                first = card;
+              } else {
+                second = card;
+                lock = true;
+                moves++;
+                updateStats();
+      
+                if (first.dataset.value === second.dataset.value) {
+                  first.classList.add('matched');
+                  second.classList.add('matched');
+                  matchedPairs++;
+                  resetPick();
+                  if (matchedPairs === cards.length / 2) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                      alert(`🎉 Você venceu em ${moves} jogadas e ${timer} segundos!`);
+                      restartBtn.style.display = 'inline-block';
+                      closeBtn.style.display = 'inline-block';
+                    }, 300);
+                  }
+                } else {
+                  setTimeout(() => {
+                    first.innerHTML = '';
+                    second.innerHTML = '';
+                    resetPick();
+                  }, 1000);
+                }
+              }
+            });
+            container.appendChild(card);
+          });
+      
+          interval = setInterval(() => {
+            timer++;
+            updateStats();
+          }, 1000);
+        }
+      
+        function resetPick() {
+          first = second = null;
+          lock = false;
+        }
+      
+        document.getElementById('open-game').addEventListener('click', (e) => {
+          e.preventDefault();
+          game.style.display = 'block';
+          init();
+        });
+      
+        restartBtn.addEventListener('click', () => {
+          init();
+        });
+      
+        closeBtn.addEventListener('click', () => {
+          game.style.display = 'none';
+          restartBtn.style.display = 'none';
+          closeBtn.style.display = 'none';
+          clearInterval(interval);
+        });
+      })();
+      
+      
+        </script>
+
+    
 </body>
 </html>

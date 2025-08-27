@@ -510,3 +510,225 @@ table {
     font-weight: bold;
     color: black; /* Garantir que o texto fique visível */
 }
+
+#memory-game {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    padding: 20px;
+    z-index: 1000;
+    max-width: 90%;
+    width: 600px;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  
+  /* Cartas */
+  #memory-game .card {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    margin: 5px;
+    background: lightgray;
+    vertical-align: top;
+    cursor: pointer;
+    line-height: 80px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 5px;
+  }
+  
+  #memory-game .matched {
+    visibility: hidden;
+  }
+  
+  /* Contador de tempo e jogadas */
+  #memory-game .status {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Botões */
+  #memory-game button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #f39c12;
+    color: white;
+    font-weight: bold;
+  }
+  
+  #memory-game button:hover {
+    background-color: #e67e22;
+  }
+  
+  /* Tornar cartas menores em telas pequenas */
+  @media (max-width: 500px) {
+    #memory-game .card {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      margin: 3px;
+    }
+  
+    #memory-game {
+      width: 95%;
+      padding: 15px;
+    }
+  
+    #memory-game .status {
+      font-size: 16px;
+    }
+  
+    #memory-game button {
+      font-size: 14px;
+      padding: 8px 15px;
+    }
+  }
+
+  #auge table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block; /* Permite scroll horizontal */
+  }
+  
+  /* Cabeçalho e células */
+  #auge th, #auge td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Cabeçalho com fundo diferente */
+  #auge th {
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  /* Tornar a tabela legível em telas muito pequenas (menos de 300px) */
+  @media (max-width: 300px) {
+    #auge th, #auge td {
+      padding: 5px;       /* Menos espaçamento */
+      font-size: 12px;    /* Fonte menor */
+    }
+    
+    #auge table {
+      font-size: 12px;
+    }
+  }
+
+  #memory-game {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    padding: 20px;
+    z-index: 1000;
+    max-height: 90%;  /* Limita altura para telas pequenas */
+    overflow-y: auto;  /* Adiciona scroll vertical se precisar */
+  }
+  
+  /* Cards do jogo */
+  #memory-game .card {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    margin: 5px;
+    background: lightgray;
+    vertical-align: top;
+    cursor: pointer;
+    line-height: 80px;
+    text-align: center;
+    font-size: 24px;
+  }
+  
+  /* Cards que já foram combinados */
+  #memory-game .matched {
+    visibility: hidden;
+  }
+  
+  /* Botões (Jogar novamente / Fechar) */
+  #memory-game button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  /* Responsividade para telas menores que 500px */
+  @media (max-width: 500px) {
+    #memory-game {
+      width: 90%;        /* Ajusta largura para caber na tela */
+      padding: 15px;
+    }
+  
+    #memory-game .card {
+      width: 60px;
+      height: 60px;
+      font-size: 18px;
+    }
+  
+    #memory-game button {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }
+
+  #auge .table-container {
+    max-width: 95%;       /* Ocupa quase toda a tela, mas não totalmente */
+    margin: 20px auto;    /* Centraliza horizontalmente e dá uma margem vertical */
+    padding: 10px;        /* Espaço interno, afasta o conteúdo das bordas */
+    overflow-x: auto;     /* Scroll horizontal se necessário em telas pequenas */
+  }
+  
+  /* A tabela dentro do container */
+  #auge table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Células */
+  #auge th, #auge td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Cabeçalho */
+  #auge th {
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  /* Ajustes para telas pequenas */
+  @media (max-width: 300px) {
+    #auge th, #auge td {
+      padding: 5px;
+      font-size: 12px;
+    }
+  }
+
+  #influência, #auge {
+    text-align: center;   /* Centraliza o texto horizontalmente */
+  }
+
+  
