@@ -9,6 +9,47 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+    /* Estilo do jogo */
+    #memory-game {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 2px solid #333;
+      padding: 20px;
+      z-index: 1000;
+      max-width: 700px;
+      text-align: center;
+    }
+    #memory-game .card {
+      width: 80px;
+      height: 80px;
+      display: inline-block;
+      margin: 5px;
+      background: lightgray;
+      vertical-align: top;
+      cursor: pointer;
+      line-height: 80px;
+      text-align: center;
+      font-size: 24px;
+    }
+    #memory-game .matched {
+      visibility: hidden;
+    }
+    #close-game {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+
 </head>
 <body>
     <header>    
@@ -24,9 +65,11 @@
                     <li><a href="#influência">Influência</a></li>
                     <li><a href="#auge">Auge</a></li>
                     <li><a href="contato.html#contato">Contato</a></li>
+                    <li><a href="#" id="open-game">JOGO</a></li>
                 </ul>
             </nav>
         </div>
+
     </header>  
     <section id="inicio" class="banner">
         <h1>Os Looney Tunes</h1>
@@ -55,8 +98,13 @@
                 </div>
 
             </div>
-        
-            
+ <div id="memory-game">
+      <h2>Jogo da Memória</h2>
+      <div id="cards-container"></div>
+      <br>
+      <button id="close-game">Fechar</button>
+    </div>
+      
         </section>
         <section id="personagens">
             <h1 class="centro">Os Personagens</h1>
@@ -151,6 +199,98 @@
     <footer>
         2025 - Criado por Vinicius Vicentini :>
     </footer>
+
+     <script>
+  (function(){
+    const images = [
+      'imgsobre/frajola.webp','imgsobre/frajola.webp',
+      'imgsobre/gaguinho.webp','imgsobre/gaguinho.webp',
+      'imgsobre/patolino.webp','imgsobre/patolino.webp',
+      'imgsobre/pernalonga.webp','imgsobre/pernalonga.webp',
+      'imgsobre/piu-piu.webp','imgsobre/piu-piu.webp',
+      'imgcard/Tazz2_resized.webp','imgcard/Tazz2_resized.webp',
+      'imgcard/ligeirin_resized.webp','imgcard/ligeirin_resized.webp',
+      'imgcard/papa leguas.webp','imgcard/papa leguas.webp',
+      'galeria/cacador_resized.png','galeria/cacador_resized.png',
+      'galeria/chiquinho_resized.png','galeria/chiquinho_resized.png',
+      'galeria/eufrazino_resized.png','galeria/eufrazino_resized.png',
+      'galeria/frangolino_resized.png','galeria/frangolino_resized.png',
+      'galeria/gamba_resized.png','galeria/gamba_resized.png',
+      'galeria/marvin_resized.png','galeria/marvin_resized.png',
+      'imgcard/coiote2.png','imgcard/coiote2.png'
+    ];
+
+    let first = null, second = null;
+    let lock = false;
+    const game = document.getElementById('memory-game');
+    const container = document.getElementById('cards-container');
+
+    function shuffle(arr) {
+      for (let i = arr.length -1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function init() {
+      container.innerHTML = '';
+      const cards = shuffle(images.slice());
+      cards.forEach((val) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.value = val;
+        card.addEventListener('click', () => {
+          if (lock || card.classList.contains('matched') || card === first) return;
+
+          // Mostrar imagem
+          card.innerHTML = `<img src="img/${val}" width="80" height="80">`;
+
+          if (!first) {
+            first = card;
+          } else {
+            second = card;
+            lock = true;
+            if (first.dataset.value === second.dataset.value) {
+              first.classList.add('matched');
+              second.classList.add('matched');
+              resetPick();
+              if (container.querySelectorAll('.matched').length === cards.length) {
+                setTimeout(() => alert('Você venceu!'), 200);
+              }
+            } else {
+              setTimeout(() => {
+                first.innerHTML = '';
+                second.innerHTML = '';
+                resetPick();
+              }, 1000);
+            }
+          }
+        });
+        container.appendChild(card);
+      });
+      first = second = null;
+      lock = false;
+    }
+
+    function resetPick() {
+      first = second = null;
+      lock = false;
+    }
+
+    document.getElementById('open-game').addEventListener('click', (e) => {
+      e.preventDefault();
+      game.style.display = 'block';
+      init();
+    });
+    document.getElementById('close-game').addEventListener('click', () => {
+      game.style.display = 'none';
+    });
+  })();
+  </script>
+</body>
+</html>
+
 
     <div class="card">
         <div id="modal1" class="modal">
