@@ -11,44 +11,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
-    /* Estilo do jogo */
-    #memory-game {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      border: 2px solid #333;
-      padding: 20px;
-      z-index: 1000;
-      max-width: 700px;
-      text-align: center;
-    }
-    #memory-game .card {
-      width: 80px;
-      height: 80px;
-      display: inline-block;
-      margin: 5px;
-      background: lightgray;
-      vertical-align: top;
-      cursor: pointer;
-      line-height: 80px;
-      text-align: center;
-      font-size: 24px;
-    }
-    #memory-game .matched {
-      visibility: hidden;
-    }
-    #close-game {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: red;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  /* Estilo do jogo */
+  #memory-game {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    padding: 20px;
+    z-index: 1000;
+    text-align: center;
+  }
+  #memory-game .card {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    margin: 5px;
+    background: lightgray;
+    vertical-align: top;
+    cursor: pointer;
+    line-height: 80px;
+    text-align: center;
+    font-size: 24px;
+  }
+  #memory-game .matched {
+    visibility: hidden;
+  }
+  #memory-game button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #stats {
+    margin-bottom: 10px;
+  }
+</style>
 
 </head>
 <body>
@@ -98,11 +98,15 @@
                 </div>
 
             </div>
- <div id="memory-game">
-      <h2>Jogo da Memória</h2>
-      <div id="cards-container"></div>
-      <br>
-      <button id="close-game">Fechar</button>
+            
+<div id="memory-game">
+    <h2>Jogo da Memória Looney Tunes</h2>
+    <div id="stats">Jogadas: 0 | Tempo: 0s</div>
+    <div id="cards-container"></div>
+    <button id="restart-btn" style="display:none;">Jogar Novamente</button>
+    <button id="close-btn" style="display:none;">Fechar</button>
+
+</div>
     </div>
       
         </section>
@@ -220,73 +224,110 @@
       'imgcard/coiote2.png','imgcard/coiote2.png'
     ];
 
-    let first = null, second = null;
-    let lock = false;
-    const game = document.getElementById('memory-game');
-    const container = document.getElementById('cards-container');
+  let first = null, second = null, lock = false;
+  let moves = 0, timer = 0, interval = null, matchedPairs = 0;
+  const game = document.getElementById('memory-game');
+  const container = document.getElementById('cards-container');
+  const stats = document.getElementById('stats');
+  const restartBtn = document.getElementById('restart-btn');
+  const closeBtn = document.getElementById('close-btn');
 
-    function shuffle(arr) {
-      for (let i = arr.length -1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+  function shuffle(arr) {
+    for (let i = arr.length -1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
+    return arr;
+  }
 
-    function init() {
-      container.innerHTML = '';
-      const cards = shuffle(images.slice());
-      cards.forEach((val) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.value = val;
-        card.addEventListener('click', () => {
-          if (lock || card.classList.contains('matched') || card === first) return;
+  function updateStats() {
+    stats.textContent = `Jogadas: ${moves} | Tempo: ${timer}s`;
+  }
 
-          // Mostrar imagem
-          card.innerHTML = `<img src="img/${val}" width="80" height="80">`;
+  function init() {
+    container.innerHTML = '';
+    const cards = shuffle(images.slice());
+    first = second = null;
+    lock = false;
+    moves = 0;
+    timer = 0;
+    matchedPairs = 0;
+    restartBtn.style.display = 'none';
+    closeBtn.style.display = 'none';
+    updateStats();
 
-          if (!first) {
-            first = card;
-          } else {
-            second = card;
-            lock = true;
-            if (first.dataset.value === second.dataset.value) {
-              first.classList.add('matched');
-              second.classList.add('matched');
-              resetPick();
-              if (container.querySelectorAll('.matched').length === cards.length) {
-                setTimeout(() => alert('Você venceu!'), 200);
-              }
-            } else {
+    cards.forEach((val) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.value = val;
+      card.addEventListener('click', () => {
+        if (lock || card.classList.contains('matched') || card === first) return;
+
+        card.innerHTML = `<img src="img/${val}" width="80" height="80">`;
+
+        if (!first) {
+          first = card;
+        } else {
+          second = card;
+          lock = true;
+          moves++;
+          updateStats();
+
+          if (first.dataset.value === second.dataset.value) {
+            first.classList.add('matched');
+            second.classList.add('matched');
+            matchedPairs++;
+            resetPick();
+            if (matchedPairs === cards.length / 2) {
+              clearInterval(interval);
               setTimeout(() => {
-                first.innerHTML = '';
-                second.innerHTML = '';
-                resetPick();
-              }, 1000);
+                alert(`🎉 Você venceu em ${moves} jogadas e ${timer} segundos!`);
+                restartBtn.style.display = 'inline-block';
+                closeBtn.style.display = 'inline-block';
+              }, 300);
             }
+          } else {
+            setTimeout(() => {
+              first.innerHTML = '';
+              second.innerHTML = '';
+              resetPick();
+            }, 1000);
           }
-        });
-        container.appendChild(card);
+        }
       });
-      first = second = null;
-      lock = false;
-    }
-
-    function resetPick() {
-      first = second = null;
-      lock = false;
-    }
-
-    document.getElementById('open-game').addEventListener('click', (e) => {
-      e.preventDefault();
-      game.style.display = 'block';
-      init();
+      container.appendChild(card);
     });
-    document.getElementById('close-game').addEventListener('click', () => {
-      game.style.display = 'none';
-    });
-  })();
+
+    interval = setInterval(() => {
+      timer++;
+      updateStats();
+    }, 1000);
+  }
+
+  function resetPick() {
+    first = second = null;
+    lock = false;
+  }
+
+  document.getElementById('open-game').addEventListener('click', (e) => {
+    e.preventDefault();
+    game.style.display = 'block';
+    init();
+  });
+
+  restartBtn.addEventListener('click', () => {
+    init();
+  });
+
+  closeBtn.addEventListener('click', () => {
+    game.style.display = 'none';
+    restartBtn.style.display = 'none';
+    closeBtn.style.display = 'none';
+    clearInterval(interval);
+  });
+})();
+
+
   </script>
 </body>
 </html>
